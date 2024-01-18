@@ -1,6 +1,8 @@
 apply plugin: 'java'
 apply plugin: 'maven-publish'
-#apply plugin: 'com.android.library'
+
+group = 'com.github.QRCharlie'
+version = '1.4.3'
 
 android {
     compileSdkVersion 28
