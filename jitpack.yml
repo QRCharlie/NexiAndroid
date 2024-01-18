@@ -1,0 +1,8 @@
+# configuration file for building snapshots and releases with jitpack.io
+jdk:
+  - openjdk17
+before_install:
+  - ./scripts/prepareJitpackEnvironment.sh
+install:
+  - FILE="-Dfile=XPaySDK_v1.4.3.aar" #https://github.com/QRCharlie/NexiAndroid
+  - mvn install:install-file $FILE -DgroupId=com.github.QRCharlie -DartifactId=XPaySDK -Dversion=1.4.3 -Dpackaging=aar -DgeneratePom=true
