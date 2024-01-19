@@ -1,8 +1,17 @@
-apply plugin: 'java'
-apply plugin: 'maven-publish'
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+}
 
 group = 'com.github.QRCharlie'
 version = '1.4.3'
+
+repositories {
+    mavenCentral()
+    flatDir {
+        dirs 'libs'
+    }    
+}
 
 android {
     compileSdkVersion 28
@@ -12,12 +21,25 @@ android {
     }
 }
 
-repositories {
-    flatDir {
-        dirs 'libs'
-    }
-}
-
 dependencies {
     implementation(name: 'XPaySDK_v1.4.3', ext: 'aar')
+}
+
+task includeAar(type: Copy) {
+    from 'libs/XPaySDK_v1.4.3.aar' // Replace with the path to your AAR file
+    into 'build/outputs/aar/'
+}
+
+artifacts {
+    archives file('build/outputs/aar/XPaySDK_v1.4.3.aar') // Replace with the path used in the task above
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId 'XPaySDK' // Replace with your artifact id
+
+            artifact tasks.includeAar
+        }
+    }
 }
